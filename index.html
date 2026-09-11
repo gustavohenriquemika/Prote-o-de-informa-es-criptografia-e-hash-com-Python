@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoGuard: Sistema de Segurança Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="titulo">🛡️ CryptoGuard v1.0</h1>
+        <p class="subtitulo">Proteja dados escolares, mascare senhas e analise colisões de hash em tempo real.</p>
+
+        <!-- CAIXA DE ENTRADA -->
+        <div class="cartao">
+            <label for="input-texto">Digite a Senha, Nome ou Matrícula:</label>
+            <input type="text" id="input-texto" placeholder="Ex: Admin@2026 ou ROMA">
+        </div>
+
+        <!-- PAINEL DE CONTROLES -->
+        <div class="grupo-botoes">
+            <button id="btn-criptografar" class="btn btn-azul">🔒 Criptografar</button>
+            <button id="btn-descriptografar" class="btn btn-verde">🔓 Descriptografar</button>
+            <button id="btn-hash" class="btn btn-roxo">📊 Gerar Hash (Soma ASCII)</button>
+        </div>
+
+        <!-- PAINEL DE RESULTADOS -->
+        <div class="cartao resultado">
+            <h3>📋 Resultado do Processamento:</h3>
+            <div id="painel-resultado" class="caixa-texto">Aguardando ação...</div>
+            <div id="painel-alerta" class="alerta escondido"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
