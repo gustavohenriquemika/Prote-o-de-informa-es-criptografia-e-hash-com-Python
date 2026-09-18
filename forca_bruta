@@ -1,0 +1,61 @@
+import hashlib
+import itertools
+import time
+
+def calcula_hash(senha: str) -> str:
+    """Calcula o hash SHA-256 de uma string."""
+    return hashlib.sha256(senha.encode('utf-8')).hexdigest()
+
+def ataque_forca_bruta(senha_alvo: str):
+    # Definindo um conjunto de caracteres pequeno para o teste ser rápido
+    caracteres = "abcdefghijklmnopqrstuvwxyz"
+    tamanho_maximo = 3
+    
+    # 1. Calcula o hash da senha que queremos descobrir
+    hash_alvo = calcula_hash(senha_alvo)
+    
+    print("=" * 60)
+    print(f" Iniciando ataque de Força Bruta...")
+    print(f" Senha alvo: '{senha_alvo}'")
+    print(f" Hash alvo:  {hash_alvo}")
+    print("=" * 60)
+    
+    tentativas = 0
+    inicio_tempo = time.time()
+    
+    # Testa comprimentos de 1 até o tamanho máximo (3)
+    for comprimento in range(1, tamanho_maximo + 1):
+        print(f"\n[!] Testando combinações de tamanho {comprimento}...")
+        
+        # itertools.product gera as combinações (tuplas)
+        for combinacao in itertools.product(caracteres, repeat=comprimento):
+            tentativas += 1
+            
+            # Dica 3: Transforma a tupla em string para testar
+            senha_testada = "".join(combinacao)
+            hash_testado = calcula_hash(senha_testada)
+            
+            # Mostra o progresso dinâmico no terminal
+            print(f" -> Tentativa #{tentativas:04d}: Testando '{senha_testada}'... ", end="\r")
+            
+            # Se os hashes baterem, a senha foi encontrada!
+            if hash_testado == hash_alvo:
+                tempo_gasto = time.time() - inicio_tempo
+                print("\n\n" + "=" * 60)
+                print(f" SUCCESS: Senha quebrada com sucesso!")
+                print(f" Senha descoberta: '{senha_testada}'")
+                print(f" Total de tentativas: {tentativas}")
+                print(f" Tempo decorrido: {tempo_gasto:.4f} segundos")
+                print("=" * 60)
+                return
+            
+    print("\n\n[-] A senha não foi encontrada usando combinações de até 3 caracteres.")
+
+if __name__ == "__main__":
+    # Teste prático do desafio: defina uma senha de até 3 letras minúsculas
+    SENHA_SECRETA = "cat" 
+    
+    if len(SENHA_SECRETA) <= 3 and SENHA_SECRETA.islower():
+        ataque_forca_bruta(SENHA_SECRETA)
+    else:
+        print("[Erro] Escolha uma senha de até 3 caracteres minúsculos (ex: 'cat', 'abc', 'z').")
